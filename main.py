@@ -15,7 +15,8 @@ class Client(commands.Bot):
     def __init__(self, *, prefixes: list[str], intents: discord.Intents) -> None:
         super().__init__(
             command_prefix=prefixes, 
-            intents=intents
+            intents=intents, 
+            help_command=None
         )
 
     async def load_extensions(self) -> None:
@@ -126,9 +127,9 @@ class Client(commands.Bot):
                 name="Stats", 
                 value=(
                     "🌟 Level:\n"
-                    f" ᠌᠌ ᠌᠌• **`{user_db.level - 1}`** ➜ **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)\n"
+                    f" ᠌᠌  ᠌᠌ • **`{user_db.level - 1}`** ➜ **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)\n"
                     "\n\n💰 Coins:\n"
-                    f" ᠌᠌ ᠌᠌• **`{user_db.coins}`**"
+                    f" ᠌᠌  ᠌᠌ • **`{user_db.coins}`**"
                 )
             )
 

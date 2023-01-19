@@ -9,9 +9,10 @@ from app.util import get_most_freq_colour
 from app.models.user import User
 
 
-class UserCog(BaseCog):
+class UserCog(BaseCog, name="🏆 User"):
     @commands.command()
     async def profile(self, ctx: commands.Context, user: Optional[commands.MemberConverter] = None):
+        """Shows users profile. If no user is specified, shows your own profile."""
         user: discord.Member = user or ctx.author
 
         user_db = (await User.get_or_create(
@@ -30,9 +31,9 @@ class UserCog(BaseCog):
             name="Stats", 
             value=(
                 "🌟 Level:\n"
-                f" ᠌᠌ ᠌᠌• **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)"
+                f" ᠌᠌  ᠌᠌ • **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)"
                 "\n\n💰 Coins:\n"
-                f" ᠌᠌ ᠌᠌• **`{user_db.coins}`**"
+                f" ᠌᠌  ᠌᠌ • **`{user_db.coins}`**"
             )
         )
 

@@ -5,15 +5,15 @@ from discord.ext import commands
 from extensions._base_types import BaseCog
 
 
-class OwnerCog(BaseCog):
+class OwnerCog(BaseCog, name="Owner"):
     @commands.is_owner()
-    @commands.command()
+    @commands.command(hidden=True)
     async def close(self, ctx: commands.Context):
         await ctx.reply("⛔ Closing...")
         await self.bot.close()
 
     @commands.is_owner()
-    @commands.command()
+    @commands.command(hidden=True)
     async def reload(self, ctx: commands.Context, ext: Optional[str] = None):
         # Reload all extensions if no cog is specified.
         if ext is None:
@@ -50,7 +50,7 @@ class OwnerCog(BaseCog):
             )
 
     @commands.is_owner()
-    @commands.command()
+    @commands.command(hidden=True)
     async def cogs(self, ctx: commands.Context):
         await ctx.reply(
             "\n".join(

@@ -5,7 +5,7 @@ from discord.ext import commands
 from extensions._base_types import BaseCog
 
 
-class FunCog(BaseCog):
+class FunCog(BaseCog, name="😄 Fun"):
     @commands.command(name="8ball", aliases=["8b", "magic8ball", "magic8b"])
     async def magic_8_ball(self, ctx: commands.Context, question: str) -> None:
         """
@@ -36,10 +36,10 @@ class FunCog(BaseCog):
 
         await ctx.send(f"Question: {question}\nAnswer: {random.choice(answers)}")
 
-    @commands.command()
+    @commands.command(aliases=["coin"])
     async def coinflip(self, ctx: commands.Context, guess: str) -> None:
         """
-        Flip a coin.
+        Make a guess (` Heads ` or ` Tails `) and flip a coin!
         """
         if guess.lower() not in ["heads", "tails"]:
             await ctx.send("❌ Please choose either `heads` or `tails`.")

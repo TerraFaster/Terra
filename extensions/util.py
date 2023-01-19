@@ -5,7 +5,7 @@ from discord.ext import commands
 from extensions._base_types import BaseCog
 
 
-class UtilCog(BaseCog):
+class UtilCog(BaseCog, name="🔧 Util"):
     @commands.command(name="first-message", aliases=["firstmsg", "fmsg"])
     async def first_message(self, ctx: commands.Context):
         """Shows first message in channel."""
