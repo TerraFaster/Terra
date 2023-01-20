@@ -5,6 +5,7 @@ from typing import Optional
 from discord.ext import commands
 
 from extensions._base_types import BaseCog
+from app.util import get_most_freq_colour
 from app.views import HelpView
 
 
@@ -25,7 +26,8 @@ class GeneralCog(BaseCog, name="📋 General"):
                 description=(
                     f"Use **`<>help <command>`** for more info on a command."
                     f"\n**`<option>`** — **required** ` | ` **`[option]`** — **optional**"
-                )
+                ), 
+                color=await get_most_freq_colour(self.bot.user.display_avatar.url)
             )
 
             for cog in cogs:
@@ -59,12 +61,13 @@ class GeneralCog(BaseCog, name="📋 General"):
 
             embed = discord.Embed(
                 title=f"Help for command \"**{command}**\"", 
-                description=f"**`<option>`** — **required** ` | ` **`[option]`** — **optional**"
+                description=f"**`<option>`** — **required** ` | ` **`[option]`** — **optional**", 
+                color=await get_most_freq_colour(self.bot.user.display_avatar.url)
             )
 
             embed.add_field(
                 name="📋 Description", 
-                value=f" ᠌᠌  ᠌᠌ {cmd.help}", 
+                value=" ᠌᠌  ᠌᠌ " + cmd.help.replace("\n", "\n ᠌᠌  ᠌᠌ "), 
                 inline=False
             )
 

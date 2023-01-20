@@ -2,6 +2,8 @@ import discord
 
 from discord.ext import commands
 
+from app.util import get_most_freq_colour
+
 
 class HelpCategoriesDropdown(discord.ui.Select):
     def __init__(self, bot: commands.Bot) -> None:
@@ -31,7 +33,8 @@ class HelpCategoriesDropdown(discord.ui.Select):
             description=(
                 f"Use **`<>help <command>`** for more info on a command."
                 f"\n**`<option>`** — **required** ` | ` **`[option]`** — **optional**"
-            )
+            ), 
+            color=await get_most_freq_colour(self.bot.user.display_avatar.url)
         )
 
         embed.add_field(
@@ -41,7 +44,7 @@ class HelpCategoriesDropdown(discord.ui.Select):
                     "**` " + (f"<{param.name}>" if param.required else f"[{param.name}]") + " `**"
                     for param in cmd.clean_params.values()
                 ]) +
-                f"\n ᠌᠌  ᠌᠌ {cmd.help}" + (
+                "\n ᠌᠌  ᠌᠌ " + cmd.help.replace("\n", "\n ᠌᠌  ᠌᠌ ") + (
                     "\n ᠌᠌  ᠌᠌ `――――――――――――――――――――――――――――――――――――――`"
                     f"\n ᠌᠌  ᠌᠌ Aliases:**` {' ` | ` '.join(cmd.aliases)} `**" 
                     if cmd.aliases else ""

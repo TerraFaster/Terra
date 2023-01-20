@@ -13,8 +13,33 @@ from app.models.user import User
 class UserCog(BaseCog, name="🏆 User"):
     @commands.command()
     async def profile(self, ctx: commands.Context, user: Optional[commands.MemberConverter] = None):
-        """Shows users profile. If no user is specified, shows your own profile."""
-        user: discord.Member = user or ctx.author
+        """
+        Shows user profile.
+        You can use command replying to a message to show profile of the user who sent the message.
+        If no user is specified and no message is replied to, your profile will be shown.
+        ⚠ You can't specify user and use reply at the same time.
+        """
+        if ctx.message.reference and user:
+            await ctx.message.add_reaction("❌")
+            await ctx.reply(
+                "❌ You can't specify user and use reply at the same time.", 
+                delete_after=5
+            )
+            return
+
+        if ctx.message.reference:
+            user = ctx.message.reference.resolved.author
+
+        else:
+            user = user or ctx.author
+
+        if user.bot:
+            await ctx.message.add_reaction("❌")
+            await ctx.reply(
+                "❌ Bots don't have profiles.", 
+                delete_after=5
+            )
+            return
 
         user_db = (await User.get_or_create(
             user_id=user.id, guild_id=ctx.guild.id
