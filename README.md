@@ -14,7 +14,7 @@
 `Terra` is growing open-source Discord bot that have some useful stuff.</br>
 We aiming to implement as many useful bot functionality as we can.
 
-> Note: This project was created mainly for our portfolio, so **your contributing cannot be possible**, **sorry**. Please check out our [Contributing](#-contributing) section for more information.
+> Note: This project was created mainly for our portfolio, so **please do not create pool requests**, **sorry**. Please check out our [Contributing](#-contributing) section for more information.
 
 If you want to try it out by yourself, you can invite it to your Discord server by clicking [Here](https://discordapp.com/oauth2/authorize?client_id=769398326532898856&permissions=8&scope=bot)!
 
@@ -64,7 +64,7 @@ You can find current updates plan in [TODO.md](https://github.com/TerraFaster/Te
 ---
 <h1 align="center"><b>🤝 Contributing</b></h1>
 
-As it was described in [About](#-about) section, this project was created mainly for our portfolio, so **your contributing cannot be possible**, **sorry**.
+As it was described in [About](#-about) section, this project was created mainly for our portfolio, so **please do not create pool requests**, **sorry**.
 
 > But your ideas, suggestions and bug reports are welcome! Feel free to check out our [issues page](https://github.com/TerraFaster/Terra/issues) to find out what you could do!
 

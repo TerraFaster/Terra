@@ -19,7 +19,6 @@
 
 ### In Progress
 
-- [ ] User's ranking system
 - [ ] Give roles to users when they join a server
   - [ ] Command to add/remove roles (ask if bot should update all users in the server after changes)
   - [ ] Remember previous roles and give them back when user joins to server (if user wasn't kicked or banned)
@@ -29,3 +28,4 @@
 - [x] User profile
 - [x] User level system
 - [x] Custom help command
+- [ ] User's ranking system (Leaderboard)

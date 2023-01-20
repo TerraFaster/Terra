@@ -6,6 +6,7 @@ from discord.ext import commands
 
 from extensions._base_types import BaseCog
 from app.util import get_most_freq_colour
+from app.views import LeaderboardView
 from app.models.user import User
 
 
@@ -41,6 +42,20 @@ class UserCog(BaseCog, name="🏆 User"):
             embed=embed, 
             allowed_mentions=discord.AllowedMentions.none()
         )
+
+    @commands.command(aliases=["lb", "top"])
+    async def leaderboard(self, ctx: commands.Context):
+        """Shows users leaderboard."""
+        view = LeaderboardView()
+
+        await ctx.reply(
+            embed=await view.get_leaderboard(ctx.guild), 
+            view=view, 
+            allowed_mentions=discord.AllowedMentions.none()
+        )
+
+        # Set parent message to be able to interact with it later from view.
+        view.parent_message = ctx.message
 
 
 async def setup(bot: commands.Bot):
