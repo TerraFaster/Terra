@@ -2,7 +2,7 @@ from typing import Optional
 
 from discord.ext import commands
 
-from extensions._base_types import BaseCog
+from app._base_types import BaseCog
 
 
 class OwnerCog(BaseCog, name="Owner"):

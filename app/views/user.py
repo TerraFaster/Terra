@@ -1,16 +1,20 @@
 import discord
 
+from discord.ext import commands
+
+from app._base_types import BaseView
 from app.models.user import User
 from app.util import get_most_freq_colour
 
 
-class LeaderboardView(discord.ui.View):
-    def __init__(self, page: int = 1) -> None:
-        super().__init__()
+class LeaderboardView(BaseView):
+    def __init__(self, *, bot: commands.Bot, caller: discord.Member, page: int = 1, **kwargs):
+        super().__init__(
+            bot=bot, caller=caller, **kwargs
+        )
 
         self.page = page
         self.USER_PER_PAGE = 10
-        self.parent_message: discord.Message = None
 
     async def get_leaderboard(self, guild: discord.Guild, page: int = 1) -> discord.Embed:
         users = await User.filter(guild_id=guild.id).order_by("-level", "-exp")
@@ -19,7 +23,7 @@ class LeaderboardView(discord.ui.View):
         embed = discord.Embed(
             title="🏆 Leaderboard", 
             description=f"**Page `{page}` of `{len(users) // self.USER_PER_PAGE + 1}` — Total members: `{len(users)}`**", 
-            color=await get_most_freq_colour(icon)
+            colour=await get_most_freq_colour(icon)
         )
 
         embed.set_thumbnail(url=icon)

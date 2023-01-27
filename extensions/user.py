@@ -4,7 +4,7 @@ from typing import Optional
 
 from discord.ext import commands
 
-from extensions._base_types import BaseCog
+from app._base_types import BaseCog
 from app.util import get_most_freq_colour
 from app.views import LeaderboardView
 from app.models.user import User
@@ -47,7 +47,7 @@ class UserCog(BaseCog, name="🏆 User"):
 
         embed = discord.Embed(
             title=f"{user}'s profile", 
-            color=await get_most_freq_colour(user.display_avatar.url)
+            colour=await get_most_freq_colour(user.display_avatar.url)
         )
 
         embed.set_thumbnail(url=user.display_avatar.url)
@@ -71,16 +71,21 @@ class UserCog(BaseCog, name="🏆 User"):
     @commands.command(aliases=["lb", "top"])
     async def leaderboard(self, ctx: commands.Context):
         """Shows users leaderboard."""
-        view = LeaderboardView()
+        view = LeaderboardView(
+            bot=self.bot, 
+            caller=ctx.author
+        )
 
-        await ctx.reply(
+        msg = await ctx.reply(
             embed=await view.get_leaderboard(ctx.guild), 
             view=view, 
             allowed_mentions=discord.AllowedMentions.none()
         )
 
-        # Set parent message to be able to interact with it later from view.
-        view.parent_message = ctx.message
+        view.post_init(
+            parent_message=ctx.message, 
+            message=msg
+        )
 
 
 async def setup(bot: commands.Bot):

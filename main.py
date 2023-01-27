@@ -117,7 +117,7 @@ class Client(commands.Bot):
 
             embed = discord.Embed(
                 title=f"{author}'s profile", 
-                color=await get_most_freq_colour(author.display_avatar.url)
+                colour=await get_most_freq_colour(author.display_avatar.url)
             )
 
             embed.set_thumbnail(url=author.display_avatar.url)

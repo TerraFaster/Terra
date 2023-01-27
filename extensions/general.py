@@ -4,7 +4,7 @@ from typing import Optional
 
 from discord.ext import commands
 
-from extensions._base_types import BaseCog
+from app._base_types import BaseCog
 from app.util import get_most_freq_colour
 from app.views import HelpView
 
@@ -27,7 +27,7 @@ class GeneralCog(BaseCog, name="📋 General"):
                     f"Use **`<>help <command>`** for more info on a command."
                     f"\n**`<option>`** — **required** ` | ` **`[option]`** — **optional**"
                 ), 
-                color=await get_most_freq_colour(self.bot.user.display_avatar.url)
+                colour=await get_most_freq_colour(self.bot.user.display_avatar.url)
             )
 
             for cog in cogs:
@@ -39,9 +39,19 @@ class GeneralCog(BaseCog, name="📋 General"):
                     inline=False
                 )
 
-            await ctx.reply(
+            view = HelpView(
+                bot=self.bot, 
+                caller=ctx.author
+            )
+
+            msg = await ctx.reply(
                 embed=embed, 
-                view=HelpView(self.bot)
+                view=view
+            )
+
+            view.post_init(
+                parent_message=ctx.message, 
+                message=msg
             )
 
         # Show help for a specific command.
@@ -62,7 +72,7 @@ class GeneralCog(BaseCog, name="📋 General"):
             embed = discord.Embed(
                 title=f"Help for command \"**{command}**\"", 
                 description=f"**`<option>`** — **required** ` | ` **`[option]`** — **optional**", 
-                color=await get_most_freq_colour(self.bot.user.display_avatar.url)
+                colour=await get_most_freq_colour(self.bot.user.display_avatar.url)
             )
 
             embed.add_field(

@@ -7,6 +7,7 @@
 - > [Contributing](#-contributing)
 - > [Support](#-support)
 - > [Requirements](#-requirements)
+- > [How To Migrate (Update) DB](#-how-to-migrate-update-db)
 
 ---
 <h1 align="center"><b>👋 About</b></h1>
@@ -83,3 +84,20 @@ These are the requirements for the bot.
 
 - > Python 3.10 (Required packages listed in requirements.txt)
 - > Set environment variable `DISCORD_BOT_TOKEN` with your bot token OR replace `"YOUR_TOKEN_HERE"` in `config.py` with your bot token (keep quotes).
+
+---
+<h1 align="center"><b>🧾 How To Migrate (Update) DB</b></h1>
+
+What is migration?</br>
+**Migration is a way to update database structure without losing data.**</br>
+In this project we are using [Aerich](https://github.com/tortoise/aerich) to manage migrations.
+
+> Note: All migrations are stored in `migrations` folder.
+
+To migrate database, you need to do the following steps:
+1. > Be sure that you have installed all required packages from `requirements.txt`
+2. > Run these commands:
+    ```
+    >>> aerich migrate --name YOUR_MIGRATION_NAME
+    >>> aerich upgrade
+    ```

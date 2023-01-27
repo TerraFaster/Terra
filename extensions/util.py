@@ -2,7 +2,7 @@ import discord
 
 from discord.ext import commands
 
-from extensions._base_types import BaseCog
+from app._base_types import BaseCog
 
 
 class UtilCog(BaseCog, name="🔧 Util"):
