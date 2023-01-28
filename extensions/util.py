@@ -9,10 +9,10 @@ class UtilCog(BaseCog, name="🔧 Util"):
     @commands.command(name="first-message", aliases=["firstmsg", "fmsg"])
     async def first_message(self, ctx: commands.Context):
         """Shows first message in channel."""
-        msg: discord.Message = await ctx.channel.history(limit=1, oldest_first=True).first()
+        msg: discord.Message = await anext(ctx.channel.history(limit=1, oldest_first=True))
         
         await msg.reply(
-            f"First message in this channel.",
+            f"First message in this channel.", 
             allowed_mentions=discord.AllowedMentions.none()
         )
 
