@@ -37,8 +37,8 @@ class LeaderboardView(BaseView):
                     member.display_name if member else f"Unknown user (`{user.user_id}`)"
                 ), 
                 value=(
-                    f"🌟 Level: **`{user.level}`** (**`{user.exp}`/`{user.level_up_exp}`** xp)"
-                    f"\n💰 Coins: **`{user.coins}`**"
+                    f"⭐ Level: **`{user.level}`** (**`{user.exp}`/`{user.level_up_exp}`** xp)"
+                    f"**` | `**:coin: Coins: **`{user.coins}`**"
                 ), 
                 inline=False
             )

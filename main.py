@@ -21,7 +21,7 @@ class Client(commands.Bot):
 
     async def load_extensions(self) -> None:
         """
-        Load all extensions from the extensions folder.
+        Loads all extensions from the extensions folder.
         """
         for root, dirs, files in os.walk(config.EXTENSIONS_DIR):
             for file in files:
@@ -64,6 +64,16 @@ class Client(commands.Bot):
                 f"{self.user.id}&scope=bot&permissions={self.intents.value}"
         )
 
+        # Update all users levels
+        # NOTE: Uncomment this if you want to update all users levels from previous version.
+        #   If you have big database or just don't want to update all users levels, 
+        #   they will be updated automatically but only when user sends a message.
+        # ============================================================================== #
+        # for user in await User.all():
+        #     await user.add_exp(0)
+        # 
+        # logger.info("All users levels updated")
+
     async def close(self) -> None:
         await Tortoise.close_connections()
 
@@ -98,23 +108,17 @@ class Client(commands.Bot):
             await self.invoke(ctx)
             return
 
-        # Change user's experience
         if 5 > len(msg.content) >= 100:
             return
 
-        user_db.exp += random.randint(
+        # Add exp to user
+        old_level = user_db.level
+        new_level = await user_db.add_exp(random.randint(
             len(msg.content) // 4, 
             len(msg.content) // 2
-        )
+        ))
 
-        # Level up user
-        # XP to level up formula: req_exp + req_exp * 1.1 * (cur_level - 1)
-        if user_db.exp >= user_db.level_up_exp:
-            user_db.level += 1
-            user_db.coins += 1
-
-            await user_db.save()
-
+        if new_level:
             embed = discord.Embed(
                 title=f"{author}'s profile", 
                 colour=await get_most_freq_colour(author.display_avatar.url)
@@ -124,13 +128,17 @@ class Client(commands.Bot):
             embed.set_author(name=author.name, icon_url=author.display_avatar.url)
 
             embed.add_field(
-                name="Stats", 
+                name="⭐ Level", 
                 value=(
-                    "🌟 Level:\n"
-                    f" ᠌᠌  ᠌᠌ • **`{user_db.level - 1}`** ➜ **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)\n"
-                    "\n\n💰 Coins:\n"
-                    f" ᠌᠌  ᠌᠌ • **`{user_db.coins}`**"
-                )
+                    f" ᠌᠌  ᠌᠌ **`{old_level}`** ➜ **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)"
+                ), 
+                inline=False
+            )
+
+            embed.add_field(
+                name=":coin: Coins", 
+                value=(f" ᠌᠌  ᠌᠌ **`{user_db.coins}`**"), 
+                inline=False
             )
 
             await msg.reply(embed=embed)

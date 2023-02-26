@@ -54,13 +54,17 @@ class UserCog(BaseCog, name="🏆 User"):
         embed.set_author(name=user.name, icon_url=user.display_avatar.url)
 
         embed.add_field(
-            name="Stats", 
+            name="⭐ Level", 
             value=(
-                "🌟 Level:\n"
-                f" ᠌᠌  ᠌᠌ • **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)"
-                "\n\n💰 Coins:\n"
-                f" ᠌᠌  ᠌᠌ • **`{user_db.coins}`**"
-            )
+                f" ᠌᠌  ᠌᠌ **`{user_db.level}`** (**`{user_db.exp}`/`{user_db.level_up_exp}`** xp)"
+            ), 
+            inline=False
+        )
+
+        embed.add_field(
+            name=":coin: Coins", 
+            value=(f" ᠌᠌  ᠌᠌ **`{user_db.coins}`**"), 
+            inline=False
         )
 
         await ctx.reply(

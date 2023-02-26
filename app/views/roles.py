@@ -7,7 +7,7 @@ from app.util import get_most_freq_colour
 from app.models.guild import Guild
 
 
-class RolesDropdown(discord.ui.RoleSelect):
+class NewcomerRolesDropdown(discord.ui.RoleSelect):
     def __init__(self) -> None:
         super().__init__(
             placeholder="🔍 Select a role...", 
@@ -96,11 +96,11 @@ class RolesDropdown(discord.ui.RoleSelect):
         await interaction.followup.send(embed=embed, ephemeral=True)
 
 
-class RolesView(BaseView):
+class NewcomerRolesView(BaseView):
     def __init__(self, *, bot: commands.Bot, caller: discord.Member, **kwargs):
         super().__init__(bot=bot, caller=caller, **kwargs)
 
-        self.add_item(RolesDropdown())
+        self.add_item(NewcomerRolesDropdown())
 
         self.MAX_NEWCOMER_ROLES = 15
 

@@ -5,7 +5,7 @@ from discord.ext import commands
 from app._base_types import BaseCog
 from app.models.guild import Guild
 from app.models.user import User
-from app.views import RolesView
+from app.views import NewcomerRolesView
 
 
 class RolesCog(BaseCog, name="Roles"):
@@ -26,7 +26,7 @@ class RolesCog(BaseCog, name="Roles"):
     @commands.bot_has_permissions(manage_roles=True)
     async def newcomer_roles(self, ctx: commands.Context):
         """Manage the roles that are given to new members."""
-        view = RolesView(
+        view = NewcomerRolesView(
             bot=self.bot, 
             caller=ctx.author
         )
