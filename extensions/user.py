@@ -11,7 +11,7 @@ from app.models.user import User
 
 
 class UserCog(BaseCog, name="🏆 User"):
-    @commands.command()
+    @commands.command(aliases=["rank"])
     async def profile(self, ctx: commands.Context, user: Optional[commands.MemberConverter] = None):
         """
         Shows user profile.

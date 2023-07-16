@@ -113,12 +113,12 @@ class Client(commands.Bot):
 
         # Add exp to user
         old_level = user_db.level
-        new_level = await user_db.add_exp(random.randint(
+        await user_db.add_exp(random.randint(
             len(msg.content) // 4, 
             len(msg.content) // 2
         ))
 
-        if new_level:
+        if old_level != user_db.level:
             embed = discord.Embed(
                 title=f"{author}'s profile", 
                 colour=await get_most_freq_colour(author.display_avatar.url)

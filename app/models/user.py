@@ -21,10 +21,10 @@ class User(Model):
 
     @property
     def level_up_exp(self) -> int:
-        return self.__level_up_exp(self.level)
+        return self.__calc_level_up_exp(self.level)
     
     @staticmethod
-    def __level_up_exp(current_level: int) -> int:
+    def __calc_level_up_exp(current_level: int) -> int:
         """Calculates experience points needed to level up.
 
         Args:
@@ -35,27 +35,25 @@ class User(Model):
         """
         return int((current_level - 1) * 83 + math.sqrt(current_level * 10) * 83)
 
-    async def add_exp(self, exp: int) -> None | int:
+    async def add_exp(self, exp: int) -> None:
         """Adds experience points to user.
 
         Args:
             `exp` (`int`): Experience points.
-
-        Returns:
-            `int` | `None`: New level if leveled up, otherwise `None`.
         """
+        new_level = self.level
         self.exp += exp
-        new_level = None
 
-        if self.exp >= self.level_up_exp:
-            new_level = 1
+        level_up_exp = self.__calc_level_up_exp(new_level)
 
-            while self.exp >= self.__level_up_exp(new_level):
-                new_level += 1
+        while self.exp >= level_up_exp:
+            self.exp -= level_up_exp
+            new_level += 1
 
+            level_up_exp = self.__calc_level_up_exp(new_level)
+
+        if self.level != new_level:
             self.coins += new_level - self.level
             self.level = new_level
-            self.exp -= self.__level_up_exp(new_level - 1)
 
         await self.save()
-        return new_level
